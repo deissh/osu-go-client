@@ -1,10 +1,11 @@
-# osu!API client
+# osu!lazer api client
 
 ## Features
 
-1. Thread-safe
-2. Auto refresh access_token
-3. ...
+1. Lazer version
+2. Thread-safe
+3. Auto refresh access_token
+4. ...
 
 ## Using
 
