@@ -1,20 +1,21 @@
 package osu_go_client
 
 import (
-	"errors"
 	"fmt"
+	"github.com/pkg/errors"
 )
 
-type BeatmapSetAPI struct {
+type BeatmapAPI struct {
 	*OsuAPI
 }
 
-func (b *BeatmapSetAPI) Get(id uint) (*BeatmapSetFull, error) {
-	json := BeatmapSetFull{}
+// Get general beatmap information by beatmapId
+func (b *BeatmapAPI) Get(id uint) (*SingleBeatmap, error) {
+	json := SingleBeatmap{}
 
 	req := b.client.
 		Request().
-		Path(fmt.Sprint("/api/v2/beatmapsets/", id)).
+		Path(fmt.Sprint("/api/v2/beatmap/", id)).
 		Use(b.bearerMiddleware())
 
 	res, err := req.Send()
