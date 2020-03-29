@@ -51,8 +51,8 @@ type BeatmapSetFull struct {
 }
 
 type Availability struct {
-	DownloadDisabled bool        `json:"download_disabled"`
-	MoreInformation  interface{} `json:"more_information"`
+	DownloadDisabled bool              `json:"download_disabled"`
+	MoreInformation  map[string]string `json:"more_information"`
 }
 
 type Covers struct {
@@ -93,7 +93,7 @@ type Hype struct {
 type User struct {
 	ID            int64        `json:"id"`
 	Username      string       `json:"username"`
-	ProfileColour interface{}  `json:"profile_colour"`
+	ProfileColour string       `json:"profile_colour"`
 	AvatarURL     string       `json:"avatar_url"`
 	CountryCode   string       `json:"country_code"`
 	DefaultGroup  DefaultGroup `json:"default_group"`
@@ -110,4 +110,3 @@ type DefaultGroup string
 const (
 	Default DefaultGroup = "default"
 )
-

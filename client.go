@@ -11,6 +11,12 @@ import (
 	"time"
 )
 
+var (
+	APIDomain       = "https://osu.ppy.sh"
+	APIClientId     = "5"
+	APIClientSecret = "FGc9GAtyHzeQDshWP5Ah7dega8hJACAJpQtw6OXk"
+)
+
 type OsuAPI struct {
 	mux sync.Mutex
 
@@ -23,6 +29,7 @@ type OsuAPI struct {
 	refreshToken string
 
 	OAuth2     Oauth2API
+	Beatmap    BeatmapAPI
 	BeatmapSet BeatmapSetAPI
 }
 
@@ -32,9 +39,9 @@ func WithAccessToken(accessToken string, refreshToken string) OsuAPI {
 	client := gentleman.New()
 
 	api := OsuAPI{
-		domain:       "https://osu.ppy.sh",
-		clientId:     "5",
-		clientSecret: "FGc9GAtyHzeQDshWP5Ah7dega8hJACAJpQtw6OXk",
+		domain:       APIDomain,
+		clientId:     APIClientId,
+		clientSecret: APIClientSecret,
 
 		client:       client,
 		accessToken:  accessToken,
@@ -42,6 +49,7 @@ func WithAccessToken(accessToken string, refreshToken string) OsuAPI {
 	}
 
 	api.OAuth2 = Oauth2API{&api}
+	api.Beatmap = BeatmapAPI{&api}
 	api.BeatmapSet = BeatmapSetAPI{&api}
 
 	client.BaseURL(api.domain)

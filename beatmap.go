@@ -11,7 +11,7 @@ type BeatmapAPI struct {
 
 // Get general beatmap information by beatmapId
 func (b *BeatmapAPI) Get(id uint) (*SingleBeatmap, error) {
-	json := SingleBeatmap{}
+	data := SingleBeatmap{}
 
 	req := b.client.
 		Request().
@@ -26,9 +26,9 @@ func (b *BeatmapAPI) Get(id uint) (*SingleBeatmap, error) {
 		return nil, errors.New(res.RawResponse.Status)
 	}
 
-	if err := res.JSON(&json); err != nil {
+	if err := res.JSON(&data); err != nil {
 		return nil, err
 	}
 
-	return &json, nil
+	return &data, nil
 }
