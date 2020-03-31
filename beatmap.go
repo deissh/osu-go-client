@@ -23,7 +23,7 @@ func (b *BeatmapAPI) Get(id uint) (*SingleBeatmap, error) {
 		return nil, err
 	}
 	if !res.Ok {
-		return nil, errors.New(res.RawResponse.Status)
+		return nil, errors.New("request status: " + res.RawResponse.Status)
 	}
 
 	if err := res.JSON(&data); err != nil {

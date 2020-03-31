@@ -81,7 +81,7 @@ func TestBeatmapAPI_Get(t *testing.T) {
 			// Create a new token object, specifying signing method and the claims
 			// you would like it to contain.
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-				"iat": time.Now().UTC().Add(time.Hour * 24).Unix(),
+				"exp": time.Now().UTC().Add(time.Hour * 24).Unix(),
 			})
 
 			// Sign and get the complete encoded token as a string using the secret

@@ -16,7 +16,7 @@ type BeatmapSet struct {
 	RankedDate        time.Time    `json:"ranked_date"`
 	Creator           string       `json:"creator"`
 	UserID            int64        `json:"user_id"`
-	BPM               int64        `json:"bpm"`
+	BPM               float64      `json:"bpm"`
 	Source            string       `json:"source"`
 	Covers            Covers       `json:"covers"`
 	PreviewURL        string       `json:"preview_url"`

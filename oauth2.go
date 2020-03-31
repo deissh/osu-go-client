@@ -17,7 +17,7 @@ type Oauth2Token struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func (b *Oauth2API) TokenRenew(scope string, refreshToken string) (*Oauth2Token, error) {
+func (b *Oauth2API) TokenRenew(scope string, oldAccessToken string, refreshToken string) (*Oauth2Token, error) {
 	json := Oauth2Token{}
 
 	payload := &bytes.Buffer{}
@@ -38,6 +38,7 @@ func (b *Oauth2API) TokenRenew(scope string, refreshToken string) (*Oauth2Token,
 		Path("/oauth/token").
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Content-Type", writer.FormDataContentType()).
+		SetHeader("Authorization", "Bearer "+oldAccessToken).
 		Body(payload)
 
 	res, err := req.Send()
@@ -45,7 +46,7 @@ func (b *Oauth2API) TokenRenew(scope string, refreshToken string) (*Oauth2Token,
 		return nil, err
 	}
 	if !res.Ok {
-		return nil, errors.Wrap(err, res.RawResponse.Status)
+		return nil, errors.New("request status: " + res.RawResponse.Status)
 	}
 
 	if err := res.JSON(&json); err != nil {

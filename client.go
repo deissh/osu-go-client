@@ -7,6 +7,7 @@ import (
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/gentleman.v2/context"
 	"gopkg.in/h2non/gentleman.v2/plugin"
+	"log"
 	"sync"
 	"time"
 )
@@ -71,7 +72,9 @@ func (client OsuAPI) bearerMiddleware() plugin.Plugin {
 		}
 
 		if time.Now().After(expiredAt) {
-			token, err := client.OAuth2.TokenRenew("*", client.refreshToken)
+			log.Print("refreshing token")
+
+			token, err := client.OAuth2.TokenRenew("*", client.accessToken, client.refreshToken)
 			if token == nil || err != nil {
 				h.Error(ctx, errors.Wrap(err, "failed token refresh"))
 
@@ -104,7 +107,7 @@ func parseJwtExpiredAt(token string) (time.Time, error) {
 	}
 
 	var tm time.Time
-	switch iat := claims["iat"].(type) {
+	switch iat := claims["exp"].(type) {
 	case float64:
 		tm = time.Unix(int64(iat), 0)
 	case json.Number:

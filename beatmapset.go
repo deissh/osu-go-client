@@ -22,7 +22,7 @@ func (b *BeatmapSetAPI) Get(id uint) (*BeatmapSetFull, error) {
 		return nil, err
 	}
 	if !res.Ok {
-		return nil, errors.New(res.RawResponse.Status)
+		return nil, errors.New("request status: " + res.RawResponse.Status)
 	}
 
 	if err := res.JSON(&json); err != nil {

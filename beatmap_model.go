@@ -12,11 +12,11 @@ type Beatmap struct {
 	Version          string    `json:"version"`
 	TotalLength      int64     `json:"total_length"`
 	HitLength        int64     `json:"hit_length"`
-	BPM              int64     `json:"bpm"`
-	CS               int64     `json:"cs"`
-	Drain            int64     `json:"drain"`
-	Accuracy         int64     `json:"accuracy"`
-	Ar               int64     `json:"ar"`
+	BPM              float64   `json:"bpm"`
+	CS               float64   `json:"cs"`
+	Drain            float64   `json:"drain"`
+	Accuracy         float64   `json:"accuracy"`
+	Ar               float64   `json:"ar"`
 	Playcount        int64     `json:"playcount"`
 	Passcount        int64     `json:"passcount"`
 	CountCircles     int64     `json:"count_circles"`
