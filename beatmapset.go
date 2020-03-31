@@ -5,11 +5,11 @@ import (
 	"fmt"
 )
 
-type BeatmapSetAPI struct {
+type beatmapSetAPI struct {
 	*OsuAPI
 }
 
-func (b *BeatmapSetAPI) Get(id uint) (*BeatmapSetFull, error) {
+func (b *beatmapSetAPI) Get(id uint) (*BeatmapSetFull, error) {
 	json := BeatmapSetFull{}
 
 	req := b.client.

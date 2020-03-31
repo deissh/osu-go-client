@@ -13,11 +13,17 @@ import (
 )
 
 var (
-	APIDomain       = "https://osu.ppy.sh"
-	APIClientId     = "5"
+	// Default api domain
+	// Can be change before create api client
+	APIDomain = "https://osu.ppy.sh"
+	// OAuth2 client id
+	// Required for create access_token or refresh its
+	APIClientId = "5"
+	// OAuth2 client secret
 	APIClientSecret = "FGc9GAtyHzeQDshWP5Ah7dega8hJACAJpQtw6OXk"
 )
 
+// Package provide a simple interface to osu!api v2.
 type OsuAPI struct {
 	mux sync.Mutex
 
@@ -29,9 +35,9 @@ type OsuAPI struct {
 	accessToken  string
 	refreshToken string
 
-	OAuth2     Oauth2API
-	Beatmap    BeatmapAPI
-	BeatmapSet BeatmapSetAPI
+	OAuth2     oauth2API
+	Beatmap    beatmapAPI
+	BeatmapSet beatmapSetAPI
 }
 
 // WithAccessToken client
@@ -49,9 +55,9 @@ func WithAccessToken(accessToken string, refreshToken string) OsuAPI {
 		refreshToken: refreshToken,
 	}
 
-	api.OAuth2 = Oauth2API{&api}
-	api.Beatmap = BeatmapAPI{&api}
-	api.BeatmapSet = BeatmapSetAPI{&api}
+	api.OAuth2 = oauth2API{&api}
+	api.Beatmap = beatmapAPI{&api}
+	api.BeatmapSet = beatmapSetAPI{&api}
 
 	client.BaseURL(api.domain)
 
