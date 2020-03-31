@@ -6,7 +6,7 @@ import (
 	"mime/multipart"
 )
 
-type oauth2API struct {
+type OAuth2API struct {
 	*OsuAPI
 }
 
@@ -17,7 +17,7 @@ type Oauth2Token struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func (b *oauth2API) TokenRenew(scope string, oldAccessToken string, refreshToken string) (*Oauth2Token, error) {
+func (b *OAuth2API) TokenRenew(scope string, oldAccessToken string, refreshToken string) (*Oauth2Token, error) {
 	json := Oauth2Token{}
 
 	payload := &bytes.Buffer{}

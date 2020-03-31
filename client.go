@@ -35,13 +35,13 @@ type OsuAPI struct {
 	accessToken  string
 	refreshToken string
 
-	OAuth2     oauth2API
-	Beatmap    beatmapAPI
-	BeatmapSet beatmapSetAPI
+	OAuth2     OAuth2API
+	Beatmap    BeatmapAPI
+	BeatmapSet BeatmapSetAPI
 }
 
-// WithAccessToken client
-// auto refresh token if expire
+// Create new api client WithAccessToken with enabled auto refreshing access_token
+// by default uses APIDomain, APIClientId, APIClientSecret, variables to set the address and the client_id/client_secret
 func WithAccessToken(accessToken string, refreshToken string) OsuAPI {
 	client := gentleman.New()
 
@@ -55,9 +55,9 @@ func WithAccessToken(accessToken string, refreshToken string) OsuAPI {
 		refreshToken: refreshToken,
 	}
 
-	api.OAuth2 = oauth2API{&api}
-	api.Beatmap = beatmapAPI{&api}
-	api.BeatmapSet = beatmapSetAPI{&api}
+	api.OAuth2 = OAuth2API{&api}
+	api.Beatmap = BeatmapAPI{&api}
+	api.BeatmapSet = BeatmapSetAPI{&api}
 
 	client.BaseURL(api.domain)
 

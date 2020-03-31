@@ -5,12 +5,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-type beatmapAPI struct {
+type BeatmapAPI struct {
 	*OsuAPI
 }
 
 // Get general beatmap information by beatmapId
-func (b *beatmapAPI) Get(id uint) (*SingleBeatmap, error) {
+func (b *BeatmapAPI) Get(id uint) (*SingleBeatmap, error) {
 	data := SingleBeatmap{}
 
 	req := b.client.
