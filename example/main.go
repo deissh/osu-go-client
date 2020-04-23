@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-func fetchSet(wg *sync.WaitGroup, client osu_go_client.OsuAPI, beatMapId uint) {
+func fetchSet(wg *sync.WaitGroup, client *osu_go_client.OsuAPI, beatMapId uint) {
 	defer wg.Done()
 
 	data, err := client.BeatmapSet.Get(beatMapId)
@@ -20,10 +20,18 @@ func fetchSet(wg *sync.WaitGroup, client osu_go_client.OsuAPI, beatMapId uint) {
 }
 
 func main() {
-	api := osu_go_client.WithAccessToken(
-		os.Getenv("access_token"),
-		os.Getenv("refresh_token"),
+	//api := osu_go_client.WithAccessToken(
+	//	os.Getenv("access_token"),
+	//	os.Getenv("refresh_token"),
+	//)
+	api, err := osu_go_client.WithBasicAuth(
+		os.Getenv("username"),
+		os.Getenv("password"),
 	)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 
 	data, err := api.BeatmapSet.Get(23416)
 	if err != nil {

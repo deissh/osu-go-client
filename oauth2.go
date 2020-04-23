@@ -55,3 +55,42 @@ func (b *OAuth2API) TokenRenew(scope string, oldAccessToken string, refreshToken
 
 	return &json, nil
 }
+
+func (b *OAuth2API) CreateToken(username string, password string, scope string) (*Oauth2Token, error) {
+	json := Oauth2Token{}
+
+	payload := &bytes.Buffer{}
+	writer := multipart.NewWriter(payload)
+
+	_ = writer.WriteField("client_id", b.clientId)
+	_ = writer.WriteField("client_secret", b.clientSecret)
+	_ = writer.WriteField("scope", scope)
+	_ = writer.WriteField("grant_type", "password")
+	_ = writer.WriteField("username", username)
+	_ = writer.WriteField("password", password)
+	if err := writer.Close(); err != nil {
+		return nil, errors.Wrap(err, "setting up form data")
+	}
+
+	req := b.client.
+		Request().
+		Method("POST").
+		Path("/oauth/token").
+		SetHeader("Content-Type", "application/json").
+		SetHeader("Content-Type", writer.FormDataContentType()).
+		Body(payload)
+
+	res, err := req.Send()
+	if err != nil {
+		return nil, err
+	}
+	if !res.Ok {
+		return nil, errors.New("request status: " + res.RawResponse.Status)
+	}
+
+	if err := res.JSON(&json); err != nil {
+		return nil, err
+	}
+
+	return &json, nil
+}

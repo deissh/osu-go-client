@@ -42,7 +42,7 @@ type OsuAPI struct {
 
 // Create new api client WithAccessToken with enabled auto refreshing access_token
 // by default uses APIDomain, APIClientId, APIClientSecret, variables to set the address and the client_id/client_secret
-func WithAccessToken(accessToken string, refreshToken string) OsuAPI {
+func WithAccessToken(accessToken string, refreshToken string) *OsuAPI {
 	client := gentleman.New()
 
 	api := OsuAPI{
@@ -61,11 +61,40 @@ func WithAccessToken(accessToken string, refreshToken string) OsuAPI {
 
 	client.BaseURL(api.domain)
 
-	return api
+	return &api
+}
+
+func WithBasicAuth(username string, password string) (*OsuAPI, error) {
+	client := gentleman.New()
+
+	api := OsuAPI{
+		domain:       APIDomain,
+		clientId:     APIClientId,
+		clientSecret: APIClientSecret,
+
+		client: client,
+	}
+
+	api.OAuth2 = OAuth2API{&api}
+	api.Beatmap = BeatmapAPI{&api}
+	api.BeatmapSet = BeatmapSetAPI{&api}
+
+	client.BaseURL(api.domain)
+
+	// login
+	token, err := api.OAuth2.CreateToken(username, password, "*")
+	if err != nil {
+		return nil, errors.Wrap(err, "failed auth")
+	}
+
+	api.accessToken = token.AccessToken
+	api.refreshToken = token.RefreshToken
+
+	return &api, nil
 }
 
 // Bearer defines an authorization bearer token header in the outgoing request
-func (client OsuAPI) bearerMiddleware() plugin.Plugin {
+func (client *OsuAPI) bearerMiddleware() plugin.Plugin {
 	return plugin.NewRequestPlugin(func(ctx *context.Context, h context.Handler) {
 		client.mux.Lock()
 
