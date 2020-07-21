@@ -9,13 +9,19 @@
 
 ## Using
 
-need to import package
 ```go
-"github.com/deissh/osu-go-client"
+import client "github.com/deissh/osu-go-client"
 ```
 
 ```go
-api := osu_go_client.WithAccessToken(
+// create new client with username & password
+// api := client.WithBasicAuth(
+//	   os.Getenv("username"),
+//     os.Getenv("password"),
+// )
+
+// or with access_token and refresh_token
+api := client.WithAccessToken(
     os.Getenv("access_token"),
     os.Getenv("refresh_token"),
 )
