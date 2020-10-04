@@ -15,13 +15,13 @@ import client "github.com/deissh/osu-go-client"
 
 ```go
 // create new client with username & password
-// api := client.WithBasicAuth(
-//	   os.Getenv("username"),
-//     os.Getenv("password"),
-// )
+api := client.WithBasicAuth(
+    os.Getenv("username"),
+    os.Getenv("password"),
+)
 
 // or with access_token and refresh_token
-api := client.WithAccessToken(
+api = client.WithAccessToken(
     os.Getenv("access_token"),
     os.Getenv("refresh_token"),
 )
