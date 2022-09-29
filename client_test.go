@@ -1,3 +1,4 @@
+//go:build test
 // +build test
 
 package osu_go_client

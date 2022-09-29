@@ -2,6 +2,7 @@ package osu_go_client
 
 import (
 	"fmt"
+
 	"github.com/pkg/errors"
 )
 

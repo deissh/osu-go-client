@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/deissh/osu-go-client"
 	"log"
 	"os"
 	"sync"
+
+	osu_go_client "github.com/deissh/osu-go-client"
 )
 
 func fetchSet(wg *sync.WaitGroup, client *osu_go_client.OsuAPI, beatMapId uint) {
