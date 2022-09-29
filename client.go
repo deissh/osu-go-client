@@ -2,14 +2,15 @@ package osu_go_client
 
 import (
 	"encoding/json"
-	"github.com/dgrijalva/jwt-go"
+	"log"
+	"sync"
+	"time"
+
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/pkg/errors"
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/gentleman.v2/context"
 	"gopkg.in/h2non/gentleman.v2/plugin"
-	"log"
-	"sync"
-	"time"
 )
 
 var (

@@ -2,8 +2,9 @@ package osu_go_client
 
 import (
 	"bytes"
-	"github.com/pkg/errors"
 	"mime/multipart"
+
+	"github.com/pkg/errors"
 )
 
 type OAuth2API struct {

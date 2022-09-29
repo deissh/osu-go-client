@@ -1,13 +1,14 @@
 package osu_go_client
 
 import (
+	"reflect"
+	"testing"
+	"time"
+
 	"github.com/bxcodec/faker/v3"
 	"github.com/deissh/go-utils"
 	"github.com/dgrijalva/jwt-go"
 	mock "gopkg.in/h2non/gentleman-mock.v2"
-	"reflect"
-	"testing"
-	"time"
 )
 
 func genFakeBeatmap(t *testing.T) SingleBeatmap {
